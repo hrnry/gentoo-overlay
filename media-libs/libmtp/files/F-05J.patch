@@ -1,0 +1,11 @@
+--- libmtp-1.1.13/src/music-players.h.orig	2017-06-03 02:11:53.270777477 +0900
++++ libmtp-1.1.13/src/music-players.h	2017-06-03 02:15:15.238778360 +0900
+@@ -1299,6 +1299,8 @@
+   /* https://sourceforge.net/p/libmtp/bugs/1495/ */
+   { "Fujitsu, Ltd", 0x04c5, "Arrows 202F", 0x13dd,
+       DEVICE_FLAGS_ANDROID_BUGS },
++  /* user patch */
++  { "Fujitsu, Ltd", 0x04c5, "F-05J", 0x1585, DEVICE_FLAGS_ANDROID_BUGS },
+ 
+   /*
+    * Palm device userland program named Pocket Tunes
