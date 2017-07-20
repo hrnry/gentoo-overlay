@@ -1,0 +1,71 @@
+# cureutils completion
+
+_cure(){
+  local cword cur prev
+  COMPREPLY=()
+  cword="${COMP_CWORD}"
+  cur="${COMP_WORDS[${cword}]}"
+  prev="${COMP_WORDS[${cword}-1]}"
+
+  local cure_sub_commands cure_sub_command precure_girl_names precure_styles precure_bracket_expressions PBE
+  #cure_sub_commands=$(cure help | sed -n '/^Commands:/,/^$/s/^[[:space:]]\+cure[[:space:]]\([^[:space:]]\+\).*/\1/p')
+  cure_sub_commands="date echo girls grep help precures tr humanize janken transform version"
+
+  if (( ${cword} == 1 )); then
+    COMPREPLY=( $(compgen -W "${cure_sub_commands}" -- ${cur}) )
+    return 0
+  fi
+
+  #precure_girl_names=$(cure precures -m | cure tr [:precure_name:] [:girl_name:] | grep '[[:alnum:]]' | sort | uniq)
+  #precure_styles=$(ruby -r rubicure -e '[Cure.magical, Cure.miracle, Cure.felice].map{|c| c.transform_styles.map{|k, _v| k}}.uniq.each{|v| puts v}')
+  precure_girl_names="cure_black cure_white shiny_luminous cure_bloom cure_egret cure_dream cure_rouge cure_lemonade cure_mint cure_aqua milky_rose \
+cure_peach cure_berry cure_pine cure_passion cure_blossom cure_marine cure_sunshine cure_moonlight \
+cure_melody cure_rhythm cure_beat cure_muse cure_happy cure_sunny cure_peace cure_march cure_beauty \
+cure_heart cure_diamond cure_rosetta cure_sword cure_ace cure_lovely cure_princess cure_honey cure_fortune \
+cure_flora cure_mermaid cure_twinkle cure_scarlet cure_miracle cure_magical cure_felice cure_whip cure_custard cure_gelato cure_macaron cure_chocolat cure_parfait \
+cure_echo"
+  precure_styles="diamond ruby sapphire topaz emerald"
+
+  precure_bracket_expressions="[:girl_name:] [:human_name:] [:precure_name:] [:cast_name:] [:color:]"
+  PBE=( $(compgen -W "${precure_bracket_expressions}" -P "'" -S "'" -- ${cur}) )
+
+  cure_sub_command="${COMP_WORDS[1]}"
+  case "${cure_sub_command}" in
+    girls)
+      COMPREPLY=( $(compgen -W "-f --full-name --no-full-name -m --movie --no-movie" -- ${cur}) )
+      ;;
+    precures)
+      COMPREPLY=( $(compgen -W "-m --movie --no-movie" -- ${cur}) )
+      ;;
+    date)
+      case "${prev}" in
+        -f | --file)  COMPREPLY=( $(compgen -d -f -- ${cur}) )  ;;
+        -d | --date)  COMPREPLY=( $(compgen -W "$(date +%F)" -- ${cur}) )  ;;
+        *)            COMPREPLY=( $(compgen -W "-d --date=$(date +%F) -f --file +%Y%m%d-%H%M%S-@P" -- ${cur}) )  ;;
+      esac
+      ;;
+    echo)
+      local comp
+      case "${prev}" in
+        -p | --precure)  comp="${precure_girl_names}"  ;;
+        -s | --style)    comp="${precure_styles}"  ;;
+        *)               comp="-q --quick --no-quick -a --attack --no-attack -t --transform --no-transform -p --precure -s --style"  ;;
+      esac
+      COMPREPLY=( $(compgen -W "${comp}" -- ${cur}) )
+      ;;
+    grep)
+      COMPREPLY=( $(compgen -W "-E --extended-regexp --no-extended-regexp -o --only-matching --no-only-matching" -- ${cur}) ${PBE[*]} )
+      ;;
+    tr)
+      (( ${cword} < 4 )) && COMPREPLY=( ${PBE[*]} )
+      ;;
+    help)
+      (( ${cword} == 2 )) && COMPREPLY=( $(compgen -W "${cure_sub_commands}" -- ${cur}) )
+      ;;
+    humanize | janken | transform | version)
+      COMPREPLY=()
+      ;;
+  esac
+
+} &&
+complete -F _cure cure
