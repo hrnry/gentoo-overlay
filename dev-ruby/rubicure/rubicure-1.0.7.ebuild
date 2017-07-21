@@ -1,7 +1,7 @@
 # Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=5
+EAPI=6
 USE_RUBY="ruby22 ruby23"
 
 inherit ruby-fakegem
@@ -16,8 +16,8 @@ IUSE=""
 
 RUBY_FAKEGEM_EXTRAINSTALL="config"
 
+RDEPEND="ruby_targets_ruby22? ( dev-ruby/backport_dig )"
 ruby_add_rdepend "
 	>=dev-ruby/activesupport-5.0.0
 	>=dev-ruby/hashie-2.0.5
-	>=dev-ruby/sengiri_yaml-0.0.2
-	ruby_targets_ruby22? ( dev-ruby/backport_dig )"
+	>=dev-ruby/sengiri_yaml-0.0.2"
