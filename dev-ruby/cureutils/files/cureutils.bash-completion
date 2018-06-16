@@ -16,15 +16,8 @@ _cure(){
     return 0
   fi
 
-  #precure_girl_names=$(cure precures -m | cure tr [:precure_name:] [:girl_name:] | grep '[[:alnum:]]' | sort | uniq)
+  precure_girl_names=$(cure precures -m | cure tr [:precure_name:] [:girl_name:] | grep '[[:alnum:]]' | sort | uniq)
   #precure_styles=$(ruby -r rubicure -e '[Cure.magical, Cure.miracle, Cure.felice].map{|c| c.transform_styles.map{|k, _v| k}}.uniq.each{|v| puts v}')
-  precure_girl_names="cure_black cure_white shiny_luminous cure_bloom cure_egret cure_dream cure_rouge cure_lemonade cure_mint cure_aqua milky_rose \
-cure_peach cure_berry cure_pine cure_passion cure_blossom cure_marine cure_sunshine cure_moonlight \
-cure_melody cure_rhythm cure_beat cure_muse cure_happy cure_sunny cure_peace cure_march cure_beauty \
-cure_heart cure_diamond cure_rosetta cure_sword cure_ace cure_lovely cure_princess cure_honey cure_fortune \
-cure_flora cure_mermaid cure_twinkle cure_scarlet cure_miracle cure_magical cure_felice cure_whip cure_custard cure_gelato cure_macaron cure_chocolat cure_parfait \
-cure_yell cure_ange cure_etoile \
-cure_echo"
   precure_styles="diamond ruby sapphire topaz emerald"
 
   precure_bracket_expressions="[:girl_name:] [:human_name:] [:precure_name:] [:cast_name:] [:color:]"
