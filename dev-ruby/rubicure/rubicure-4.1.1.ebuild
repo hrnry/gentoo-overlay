@@ -1,8 +1,10 @@
-# Copyright 1999-2022 Gentoo Foundation
+# Copyright 1999-2023 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-USE_RUBY="ruby27 ruby30 ruby31"
+USE_RUBY="ruby31 ruby32 ruby33 ruby34"
+
+RUBY_FAKEGEM_VERSION="4.1.1"
 
 inherit ruby-fakegem
 
